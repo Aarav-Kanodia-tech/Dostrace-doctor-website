@@ -86,22 +86,14 @@ export function SignalModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        showCloseButton={false}
-        className="max-h-[90vh] overflow-y-auto sm:max-w-4xl"
-      >
-        <header className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4">
-          <div className="min-w-0">
-            <h2 className="truncate text-lg font-bold tracking-tight text-foreground">
-              Patient #{patient.id} — Multi-Signal Adherence Reasoning
-            </h2>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Age {patient.age} · {patient.condition} · WONDRx paper prescription timestamp: Day 0
-            </p>
-          </div>
-          <Button variant="ghost" size="icon" onClick={() => onOpenChange(false)} aria-label="Close">
-            <X className="h-4 w-4" />
-          </Button>
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-4xl">
+        <header className="min-w-0 pr-8">
+          <h2 className="text-lg font-bold tracking-tight text-foreground">
+            Patient #{patient.id} — Multi-Signal Adherence Reasoning
+          </h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Age {patient.age} · {patient.condition} · WONDRx paper prescription timestamp: Day 0
+          </p>
         </header>
 
         <section className="mt-2 rounded-lg border border-border bg-surface p-5">
