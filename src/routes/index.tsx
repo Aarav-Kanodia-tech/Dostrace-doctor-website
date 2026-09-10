@@ -73,7 +73,7 @@ function Dashboard() {
   const runSync = useCallback(() => {
     setSynced(true);
     toast.success(
-      "Sync Received from Patient App: Patient #PX-8802 Blister Pack OCR Verified (Batch #MF-2026)",
+      "Sync Received from Patient App: Patient #PX-8802 refill OCR verified (Batch #MF-2026)",
     );
   }, []);
 
