@@ -79,7 +79,20 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --background: oklch(0.984 0.003 247.858);
+  --surface: oklch(1 0 0);
+  --risk-high: oklch(0.72 0.16 65);
+  --risk-high-foreground: oklch(0.36 0.1 58);
+  --risk-high-soft: oklch(0.965 0.038 82);
+  --risk-inefficacy: oklch(0.55 0.19 292);
+  --risk-inefficacy-foreground: oklch(0.4 0.17 292);
+  --risk-inefficacy-soft: oklch(0.96 0.03 292);
+  --risk-unknown: oklch(0.62 0.03 257);
+  --risk-unknown-foreground: oklch(0.4 0.03 257);
+  --risk-unknown-soft: oklch(0.96 0.006 248);
+  --risk-low: oklch(0.62 0.14 158);
+  --risk-low-foreground: oklch(0.4 0.11 158);
+  --risk-low-soft: oklch(0.96 0.04 160);
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
