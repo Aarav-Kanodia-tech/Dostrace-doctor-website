@@ -19,6 +19,22 @@
  */
 
 @theme inline {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --color-risk-high: var(--risk-high);
+  --color-risk-high-foreground: var(--risk-high-foreground);
+  --color-risk-high-soft: var(--risk-high-soft);
+  --color-risk-inefficacy: var(--risk-inefficacy);
+  --color-risk-inefficacy-foreground: var(--risk-inefficacy-foreground);
+  --color-risk-inefficacy-soft: var(--risk-inefficacy-soft);
+  --color-risk-unknown: var(--risk-unknown);
+  --color-risk-unknown-foreground: var(--risk-unknown-foreground);
+  --color-risk-unknown-soft: var(--risk-unknown-soft);
+  --color-risk-low: var(--risk-low);
+  --color-risk-low-foreground: var(--risk-low-foreground);
+  --color-risk-low-soft: var(--risk-low-soft);
+  --color-surface: var(--surface);
+  --shadow-card: 0 1px 2px oklch(0.2 0.04 265 / 6%), 0 8px 24px -16px oklch(0.2 0.04 265 / 18%);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -63,7 +79,20 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --background: oklch(0.984 0.003 247.858);
+  --surface: oklch(1 0 0);
+  --risk-high: oklch(0.72 0.16 65);
+  --risk-high-foreground: oklch(0.36 0.1 58);
+  --risk-high-soft: oklch(0.965 0.038 82);
+  --risk-inefficacy: oklch(0.55 0.19 292);
+  --risk-inefficacy-foreground: oklch(0.4 0.17 292);
+  --risk-inefficacy-soft: oklch(0.96 0.03 292);
+  --risk-unknown: oklch(0.62 0.03 257);
+  --risk-unknown-foreground: oklch(0.4 0.03 257);
+  --risk-unknown-soft: oklch(0.96 0.006 248);
+  --risk-low: oklch(0.62 0.14 158);
+  --risk-low-foreground: oklch(0.4 0.11 158);
+  --risk-low-soft: oklch(0.96 0.04 160);
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
