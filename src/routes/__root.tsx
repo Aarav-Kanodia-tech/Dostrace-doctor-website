@@ -78,17 +78,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "DoseTrace Clinician Intelligence" },
+      { title: "DoseTrace Doctor View" },
       {
         name: "description",
         content:
-          "Clinical decision support that separates silent medication non-adherence from drug inefficacy.",
+          "A simple doctor view showing missed medicine, refill records, health changes, and patient visits.",
       },
-      { property: "og:title", content: "DoseTrace Clinician Intelligence" },
+      { property: "og:title", content: "DoseTrace Doctor View" },
       {
         property: "og:description",
         content:
-          "Clinical decision support that separates silent medication non-adherence from drug inefficacy.",
+          "See who may have missed medicine and whose medicine may not be working.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -104,7 +104,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap",
       },
     ],
   }),
