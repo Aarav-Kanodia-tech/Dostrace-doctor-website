@@ -16,7 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SignalAnalysis } from "@/components/dosetrace/SignalAnalysis";
-import { BASE_PATIENTS, SYNCED_8802, badgeVariantFor, type Patient } from "@/components/dosetrace/data";
+import { BASE_PATIENTS, SYNCED_8802, type Patient } from "@/components/dosetrace/data";
 
 export const Route = createFileRoute("/")({
   head: () => ({
