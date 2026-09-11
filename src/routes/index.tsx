@@ -44,9 +44,9 @@ const SYNC_KEY = "dosetrace_patient_sync";
 
 const TABS = [
   { label: "All Patients", kind: "all" as const },
-  { label: "Suspected Non-Adherence", kind: "high" as const },
-  { label: "Inefficacy Alerts", kind: "inefficacy" as const },
-  { label: "High Uncertainty", kind: "unknown" as const },
+  { label: "May Miss Medicine", kind: "high" as const },
+  { label: "Medicine May Not Work", kind: "inefficacy" as const },
+  { label: "Not Enough Information", kind: "unknown" as const },
 ];
 
 function Dashboard() {
@@ -78,7 +78,7 @@ function Dashboard() {
       patient?.id === "PX-8802" ? { ...patient, ...SYNCED_8802 } : patient,
     );
     toast.success(
-      "Sync Received from Patient App: Patient #PX-8802 refill OCR verified (Batch #MF-2026)",
+      "Update received: Patient #PX-8802 refill confirmed from a photo.",
     );
   }, []);
 
@@ -94,24 +94,24 @@ function Dashboard() {
     {
       icon: AlertTriangle,
       count: counts.high,
-      title: "Suspected Non-Adherence",
-      sub: "Supply gap matches biomarker flare & postponed follow-up",
+      title: "May Not Be Taking Medicine",
+      sub: "Late refill, changed health readings, and delayed visit",
       variant: "riskHigh" as const,
       accent: "bg-risk-high",
     },
     {
       icon: FlaskConical,
       count: counts.inefficacy,
-      title: "Potential Drug Inefficacy",
-      sub: "Biomarkers deteriorating despite on-time verified supply",
+      title: "Medicine May Not Be Working",
+      sub: "Health readings worsened even though refills were on time",
       variant: "riskInefficacy" as const,
       accent: "bg-risk-inefficacy",
     },
     {
       icon: Signal,
       count: counts.unknown,
-      title: "High Data Uncertainty",
-      sub: "Vitals stable; untracked offline chemist purchase assumed",
+      title: "Not Enough Information",
+      sub: "Health readings are steady, but a refill record is missing",
       variant: "riskUnknown" as const,
       accent: "bg-risk-unknown",
     },
@@ -136,13 +136,13 @@ function Dashboard() {
           </div>
           <div className="flex items-center gap-4">
             <Badge variant="riskUnknown" className="hidden font-mono sm:inline-flex">
-              Clinical Timeline: Day 42 / 60
+                Day 42 of 60
             </Badge>
             <div className="flex min-w-0 items-center gap-2 border-l border-border pl-4">
               <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
                 <UserRound className="h-4 w-4" />
               </span>
-              <span className="truncate text-sm font-medium text-foreground">Staff Physician</span>
+              <span className="truncate text-sm font-medium text-foreground">Doctor</span>
             </div>
           </div>
         </div>
@@ -201,13 +201,13 @@ function Dashboard() {
         <section className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 rounded-xl border border-border bg-surface p-4 shadow-card md:flex md:justify-between">
           <div className="flex min-w-0 items-center gap-3">
             <RefreshCw className="h-4 w-4 shrink-0 text-muted-foreground" />
-            <p className="min-w-0 text-sm font-semibold text-foreground">Cross-App Sync Engine</p>
+            <p className="min-w-0 text-sm font-semibold text-foreground">Patient Updates</p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Button onClick={runSync}>Simulate Incoming Patient Companion Event</Button>
+            <Button onClick={runSync}>Show New Refill Update</Button>
             <Button variant="outline" onClick={() => setSynced(false)}>
               <RotateCcw className="mr-2 h-4 w-4" />
-              Reset Demo State
+              Reset Example
             </Button>
           </div>
         </section>
@@ -215,11 +215,10 @@ function Dashboard() {
         <section className="overflow-hidden rounded-xl border border-border bg-surface shadow-card">
           <div className="border-b border-border px-5 py-4">
             <h2 className="text-sm font-bold tracking-tight text-foreground">
-              Priority Cohort Triage
+              Patients to Check
             </h2>
             <p className="text-xs text-muted-foreground">
-              Reasoned across smart-pen baselines, chemist fulfillment, wearable drift and
-              appointment cadence.
+              Based on medicine use, refill records, health readings, and visits.
             </p>
           </div>
           <div className="overflow-x-auto">
@@ -228,12 +227,12 @@ function Dashboard() {
                 <tr>
                   {[
                     "Patient ID",
-                    "Regimen (WONDRx Pen Baseline)",
-                    "Chemist Refill Status",
-                    "Appointment Cadence",
-                    "Passive Biomarker Drift",
+                    "Medicine Plan",
+                    "Refill Status",
+                    "Next Visit",
+                    "Health Changes",
                     "Medicines Missed",
-                    "Inference Status",
+                    "What It May Mean",
                     "Action",
                   ].map((h) => (
                     <th key={h} className="whitespace-nowrap px-5 py-3 font-semibold">
@@ -260,7 +259,7 @@ function Dashboard() {
                         {p.chemist}
                       </span>
                     </td>
-                    <td className="px-5 py-4 text-muted-foreground">{p.cadence}</td>
+                    <td className="px-5 py-4 text-muted-foreground">{p.appointment}</td>
                     <td className="px-5 py-4 text-foreground">{p.telemetry}</td>
                     <td className="px-5 py-4">
                       <Badge variant={p.missedMedicines > 0 ? "riskHigh" : "riskLow"}>
@@ -274,7 +273,7 @@ function Dashboard() {
                     </td>
                     <td className="px-5 py-4">
                       <Button variant="outline" size="sm" onClick={() => setActive(p)}>
-                        Analyze Signals
+                        View Details
                       </Button>
                     </td>
                   </tr>
