@@ -21,18 +21,18 @@ import { BASE_PATIENTS, SYNCED_8802, badgeVariantFor, type Patient } from "@/com
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "DoseTrace Clinician Intelligence — Adherence vs. Inefficacy" },
+      { title: "DoseTrace — Medicine Tracking for Doctors" },
       {
         name: "description",
         content:
-          "Clinical decision dashboard that separates silent medication non-adherence from drug inefficacy using refill, wearable and appointment signals.",
+          "A simple doctor view showing missed medicine, refill records, health changes, and patient visits.",
       },
-      { property: "og:title", content: "DoseTrace Clinician Intelligence" },
+        property: "og:title", content: "DoseTrace — Medicine Tracking for Doctors" },
       { property: "og:type", content: "website" },
       {
         property: "og:description",
         content:
-          "Detect silent medication non-adherence and distinguish it from pharmacological inefficacy — no patient check-ins required.",
+          "See who may have missed medicine and whose medicine may not be working.",
       },
       { name: "twitter:card", content: "summary" },
     ],
@@ -127,10 +127,10 @@ function Dashboard() {
             </span>
             <div className="min-w-0">
               <h1 className="truncate text-base font-bold tracking-tight text-foreground">
-                DoseTrace Clinician Intelligence
+                 DoseTrace Doctor View
               </h1>
               <p className="truncate text-xs text-muted-foreground">
-                Outpatient Chronic Care &amp; Cardiology Unit
+                 Long-term Care and Heart Health
               </p>
             </div>
           </div>

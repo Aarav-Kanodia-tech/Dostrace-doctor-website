@@ -32,7 +32,7 @@ export const BASE_PATIENTS: Patient[] = [
     id: "PX-4190",
     age: 63,
     condition: "High blood pressure",
-    regimen: "Amlodipine 5mg Daily",
+    regimen: "Amlodipine 5mg, once a day",
     chemist: "Refill picked up on time",
     chemistTone: "ok",
     appointment: "Visit happened on time",
