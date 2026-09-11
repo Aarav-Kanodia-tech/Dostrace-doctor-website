@@ -27,7 +27,7 @@ export const Route = createFileRoute("/")({
         content:
           "A simple doctor view showing missed medicine, refill records, health changes, and patient visits.",
       },
-        property: "og:title", content: "DoseTrace — Medicine Tracking for Doctors" },
+      { property: "og:title", content: "DoseTrace — Medicine Tracking for Doctors" },
       { property: "og:type", content: "website" },
       {
         property: "og:description",
