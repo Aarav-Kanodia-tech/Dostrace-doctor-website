@@ -225,14 +225,13 @@ function Dashboard() {
             <table className="w-full min-w-[1100px] text-left text-sm">
               <thead className="bg-secondary/60 text-xs uppercase tracking-wider text-muted-foreground">
                 <tr>
-                  {[
+                {[
                     "Patient ID",
                     "Medicine Plan",
                     "Refill Status",
                     "Next Visit",
                     "Health Changes",
                     "Medicines Missed",
-                    "What It May Mean",
                     "Action",
                   ].map((h) => (
                     <th key={h} className="whitespace-nowrap px-5 py-3 font-semibold">
@@ -267,11 +266,6 @@ function Dashboard() {
                       </Badge>
                     </td>
                     <td className="px-5 py-4">
-                      <Badge variant={badgeVariantFor[p.kind]} className="whitespace-nowrap">
-                        {p.inference}
-                      </Badge>
-                    </td>
-                    <td className="px-5 py-4">
                       <Button variant="outline" size="sm" onClick={() => setActive(p)}>
                         View Details
                       </Button>
@@ -280,7 +274,7 @@ function Dashboard() {
                 ))}
                 {visible.length === 0 && (
                   <tr>
-                    <td colSpan={8} className="px-5 py-10 text-center text-muted-foreground">
+                    <td colSpan={7} className="px-5 py-10 text-center text-muted-foreground">
                       No patients match this filter.
                     </td>
                   </tr>
