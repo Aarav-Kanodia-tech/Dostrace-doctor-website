@@ -16,7 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SignalAnalysis } from "@/components/dosetrace/SignalAnalysis";
-import { BASE_PATIENTS, SYNCED_8802, badgeVariantFor, type Patient } from "@/components/dosetrace/data";
+import { BASE_PATIENTS, SYNCED_8802, type Patient } from "@/components/dosetrace/data";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -97,7 +97,7 @@ function Dashboard() {
       title: "May Not Be Taking Medicine",
       sub: "Late refill, changed health readings, and delayed visit",
       variant: "riskHigh" as const,
-      accent: "bg-risk-high",
+      tone: "risk-high" as const,
     },
     {
       icon: FlaskConical,
@@ -105,7 +105,7 @@ function Dashboard() {
       title: "Medicine May Not Be Working",
       sub: "Health readings worsened even though refills were on time",
       variant: "riskInefficacy" as const,
-      accent: "bg-risk-inefficacy",
+      tone: "risk-inefficacy" as const,
     },
     {
       icon: Signal,
@@ -113,36 +113,43 @@ function Dashboard() {
       title: "Not Enough Information",
       sub: "Health readings are steady, but a refill record is missing",
       variant: "riskUnknown" as const,
-      accent: "bg-risk-unknown",
+      tone: "risk-unknown" as const,
     },
   ];
+
+  const toneIconBg: Record<string, string> = {
+    "risk-high": "bg-risk-high-soft text-risk-high-foreground",
+    "risk-inefficacy": "bg-risk-inefficacy-soft text-risk-inefficacy-foreground",
+    "risk-unknown": "bg-risk-unknown-soft text-risk-unknown-foreground",
+  };
 
   return (
     <div className="min-h-screen bg-background font-sans">
       <header className="border-b border-border bg-surface">
-        <div className="mx-auto grid max-w-[1400px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-6 py-4 lg:flex lg:justify-between">
+        <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-6 py-4">
           <div className="flex min-w-0 items-center gap-3">
-            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary text-primary-foreground">
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary text-primary-foreground shadow-sm">
               <HeartPulse className="h-5 w-5" />
             </span>
             <div className="min-w-0">
               <h1 className="truncate text-base font-bold tracking-tight text-foreground">
-                 DoseTrace Doctor View
+                DoseTrace Doctor View
               </h1>
               <p className="truncate text-xs text-muted-foreground">
-                 Long-term Care and Heart Health
+                Long-term Care and Heart Health
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <Badge variant="riskUnknown" className="hidden font-mono sm:inline-flex">
-                Day 42 of 60
-            </Badge>
-            <div className="flex min-w-0 items-center gap-2 border-l border-border pl-4">
-              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
+
+          <div className="hidden items-center gap-3 sm:flex">
+            <div className="flex items-center gap-3 rounded-2xl bg-gradient-to-br from-primary to-primary/80 px-4 py-2 text-primary-foreground shadow-md">
+              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/20">
                 <UserRound className="h-4 w-4" />
               </span>
-              <span className="truncate text-sm font-medium text-foreground">Doctor</span>
+              <div className="min-w-0">
+                <p className="truncate text-xs font-semibold opacity-90">Doctor</p>
+                <p className="truncate text-[10px] opacity-80">ID: DT-CLIN-7729</p>
+              </div>
             </div>
           </div>
         </div>
@@ -156,7 +163,7 @@ function Dashboard() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search patient ID (e.g. PX-8802)"
-              className="bg-surface pl-9 font-mono text-sm"
+              className="rounded-full bg-surface pl-9 font-mono text-sm shadow-sm"
             />
           </div>
           <div className="flex flex-wrap gap-2">
@@ -166,7 +173,7 @@ function Dashboard() {
                 onClick={() => setTab(t.kind)}
                 className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
                   tab === t.kind
-                    ? "border-transparent bg-primary text-primary-foreground"
+                    ? "border-transparent bg-primary text-primary-foreground shadow-sm"
                     : "border-border bg-surface text-muted-foreground hover:bg-secondary"
                 }`}
               >
@@ -180,16 +187,17 @@ function Dashboard() {
           {kpis.map((k) => (
             <article
               key={k.title}
-              className="relative overflow-hidden rounded-xl border border-border bg-surface p-5 shadow-card transition-shadow hover:shadow-lg"
+              className="rounded-2xl border border-border bg-surface p-5 shadow-card transition-shadow hover:shadow-lg"
             >
-              <span className={`absolute inset-y-0 left-0 w-1 ${k.accent}`} />
               <div className="flex items-start justify-between gap-3">
-                <p className="text-3xl font-bold tracking-tight text-foreground">{k.count}</p>
+                <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full ${toneIconBg[k.tone]}`}>
+                  <k.icon className="h-5 w-5" />
+                </span>
                 <Badge variant={k.variant}>
-                  <k.icon className="mr-1 h-3 w-3" />
-                  Signal
+                  Alert
                 </Badge>
               </div>
+              <p className="mt-4 text-3xl font-bold tracking-tight text-foreground">{k.count}</p>
               <h2 className="mt-1 text-sm font-semibold text-foreground">
                 Patients • {k.title}
               </h2>
@@ -198,21 +206,26 @@ function Dashboard() {
           ))}
         </section>
 
-        <section className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 rounded-xl border border-border bg-surface p-4 shadow-card md:flex md:justify-between">
+        <section className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-border bg-surface p-4 shadow-card">
           <div className="flex min-w-0 items-center gap-3">
-            <RefreshCw className="h-4 w-4 shrink-0 text-muted-foreground" />
-            <p className="min-w-0 text-sm font-semibold text-foreground">Patient Updates</p>
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
+              <RefreshCw className="h-5 w-5" />
+            </span>
+            <div>
+              <p className="text-sm font-semibold text-foreground">Patient Updates</p>
+              <p className="text-xs text-muted-foreground">Simulate a refill update from the patient app.</p>
+            </div>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Button onClick={runSync}>Show New Refill Update</Button>
-            <Button variant="outline" onClick={() => setSynced(false)}>
+            <Button onClick={runSync} className="rounded-full">Show New Refill Update</Button>
+            <Button variant="outline" onClick={() => setSynced(false)} className="rounded-full">
               <RotateCcw className="mr-2 h-4 w-4" />
               Reset Example
             </Button>
           </div>
         </section>
 
-        <section className="overflow-hidden rounded-xl border border-border bg-surface shadow-card">
+        <section className="overflow-hidden rounded-2xl border border-border bg-surface shadow-card">
           <div className="border-b border-border px-5 py-4">
             <h2 className="text-sm font-bold tracking-tight text-foreground">
               Patients to Check
@@ -232,7 +245,6 @@ function Dashboard() {
                     "Next Visit",
                     "Health Changes",
                     "Medicines Missed",
-                    "What It May Mean",
                     "Action",
                   ].map((h) => (
                     <th key={h} className="whitespace-nowrap px-5 py-3 font-semibold">
@@ -267,12 +279,7 @@ function Dashboard() {
                       </Badge>
                     </td>
                     <td className="px-5 py-4">
-                      <Badge variant={badgeVariantFor[p.kind]} className="whitespace-nowrap">
-                        {p.inference}
-                      </Badge>
-                    </td>
-                    <td className="px-5 py-4">
-                      <Button variant="outline" size="sm" onClick={() => setActive(p)}>
+                      <Button variant="outline" size="sm" onClick={() => setActive(p)} className="rounded-full">
                         View Details
                       </Button>
                     </td>
@@ -280,7 +287,7 @@ function Dashboard() {
                 ))}
                 {visible.length === 0 && (
                   <tr>
-                    <td colSpan={8} className="px-5 py-10 text-center text-muted-foreground">
+                    <td colSpan={7} className="px-5 py-10 text-center text-muted-foreground">
                       No patients match this filter.
                     </td>
                   </tr>

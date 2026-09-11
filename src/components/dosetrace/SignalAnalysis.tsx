@@ -1,4 +1,4 @@
-import { Activity, CalendarClock, HeartPulse, PackageSearch, ScanLine } from "lucide-react";
+import { CalendarClock, HeartPulse, PackageSearch, ScanLine } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -168,22 +168,6 @@ export function SignalAnalysis({
           </BandRow>
         </section>
 
-        <section className="rounded-lg border border-risk-high/30 bg-risk-high-soft p-5">
-          <div className="flex min-w-0 items-center gap-2">
-            <Activity className="h-4 w-4 shrink-0 text-risk-high-foreground" />
-            <h3 className="text-sm font-bold text-risk-high-foreground">
-              What the Information Suggests
-            </h3>
-            <Badge variant="riskHigh" className="ml-auto shrink-0 bg-surface">
-              86% ± 4%
-            </Badge>
-          </div>
-          <p className="mt-2 text-sm leading-relaxed text-risk-high-foreground">
-            We are 86% sure the patient missed medicine after the refill could not be confirmed.
-            Their health readings changed around the same time. The medicine itself is likely
-            still working.
-          </p>
-        </section>
 
         <footer className="flex flex-wrap gap-2">
           <Button>Change Medicine Plan</Button>
