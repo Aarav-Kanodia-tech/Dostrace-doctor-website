@@ -15,7 +15,7 @@ import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { SignalModal } from "@/components/dosetrace/SignalModal";
+import { SignalAnalysis } from "@/components/dosetrace/SignalAnalysis";
 import { BASE_PATIENTS, SYNCED_8802, badgeVariantFor, type Patient } from "@/components/dosetrace/data";
 
 export const Route = createFileRoute("/")({
@@ -292,7 +292,7 @@ function Dashboard() {
         </section>
       </main>
 
-      <SignalModal patient={active} open={!!active} onOpenChange={(v) => !v && setActive(null)} />
+      <SignalAnalysis patient={active} open={!!active} onOpenChange={(v) => !v && setActive(null)} />
     </div>
   );
 }
