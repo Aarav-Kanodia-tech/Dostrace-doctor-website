@@ -7,7 +7,7 @@ export type Patient = {
   regimen: string;
   chemist: string;
   chemistTone: "warn" | "ok" | "muted";
-  cadence: string;
+  appointment: string;
   telemetry: string;
   missedMedicines: number;
   inference: string;
@@ -19,48 +19,48 @@ export const BASE_PATIENTS: Patient[] = [
     id: "PX-8802",
     age: 58,
     condition: "Type 2 Diabetes",
-    regimen: "Metformin 500mg BID (30-day supply)",
-    chemist: "Delayed (+12 days unverified)",
+    regimen: "Metformin 500mg, twice a day (30 days)",
+    chemist: "12 days late, not confirmed",
     chemistTone: "warn",
-    cadence: "Follow-up postponed by 14 days",
-    telemetry: "RHR Spike (+14 bpm) & Sleep Disruption",
+    appointment: "Next visit moved back by 14 days",
+    telemetry: "Resting heart rate up by 14; sleep worsened",
     missedMedicines: 24,
-    inference: "High Risk: Suspected Omission (86% Confidence)",
+    inference: "High risk: May not be taking medicine (86% sure)",
     kind: "high",
   },
   {
     id: "PX-4190",
     age: 63,
-    condition: "Stage 2 Hypertension",
-    regimen: "Amlodipine 5mg Daily",
-    chemist: "Rx Served On-Time",
+    condition: "High blood pressure",
+    regimen: "Amlodipine 5mg, once a day",
+    chemist: "Refill picked up on time",
     chemistTone: "ok",
-    cadence: "Punctual check-in",
-    telemetry: "Systolic BP Drift (148/92 mmHg)",
+    appointment: "Visit happened on time",
+    telemetry: "Blood pressure rose to 148/92",
     missedMedicines: 0,
-    inference: "Potential Molecule Resistance (89% Confidence)",
+    inference: "Medicine may not be working (89% sure)",
     kind: "inefficacy",
   },
   {
     id: "PX-1044",
     age: 47,
-    condition: "Hyperlipidemia",
+    condition: "High cholesterol",
     regimen: "Atorvastatin 20mg",
-    chemist: "Unrecorded (Cash / Off-network)",
+    chemist: "No refill record (may have paid cash)",
     chemistTone: "muted",
-    cadence: "Punctual check-in",
-    telemetry: "Vitals Stable at Baseline",
+    appointment: "Visit happened on time",
+    telemetry: "Health readings stayed normal",
     missedMedicines: 0,
-    inference: "Data Incomplete — Presumed Compliant (48% Uncertainty)",
+    inference: "Not enough information (48% unsure)",
     kind: "unknown",
   },
 ];
 
 export const SYNCED_8802: Partial<Patient> = {
-  chemist: "Verified via Refill OCR",
+  chemist: "Refill confirmed from photo",
   chemistTone: "ok",
   missedMedicines: 0,
-  inference: "Low Risk / Adherent (Verified Supply)",
+  inference: "Low risk: Refill confirmed",
   kind: "low",
 };
 

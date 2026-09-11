@@ -67,7 +67,7 @@ function TelemetryCurve() {
         className="absolute top-1 -translate-x-1/2 rounded bg-risk-high-soft px-1.5 py-0.5 text-[10px] font-semibold text-risk-high-foreground"
         style={{ left: `${pct(41)}%` }}
       >
-        Day 33 · washout-aligned RHR spike
+        Day 33 · resting heart rate starts rising
       </span>
     </div>
   );
@@ -89,10 +89,10 @@ export function SignalAnalysis({
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-4xl">
         <header className="min-w-0 pr-8">
           <h2 className="text-lg font-bold tracking-tight text-foreground">
-            Patient #{patient.id} — Multi-Signal Adherence Reasoning
+            Patient #{patient.id} — Medicine Review
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            Age {patient.age} · {patient.condition} · WONDRx paper prescription timestamp: Day 0
+            Age {patient.age} · {patient.condition} · Prescription started on Day 0
           </p>
           <Badge
             variant={patient.missedMedicines > 0 ? "riskHigh" : "riskLow"}
@@ -104,28 +104,28 @@ export function SignalAnalysis({
 
         <section className="mt-2 rounded-lg border border-border bg-surface p-5">
           <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-            60-Day Synchronized Multi-Signal Timeline
+            60-Day Health History
           </h3>
 
-          <BandRow icon={<PackageSearch className="h-4 w-4" />} title="Prescription Window">
+          <BandRow icon={<PackageSearch className="h-4 w-4" />} title="Medicine Supply">
             <div className="relative h-8 w-full overflow-hidden rounded-md bg-secondary">
               <div
                 className="absolute inset-y-0 flex items-center justify-center bg-risk-low/25 text-[10px] font-semibold text-risk-low-foreground"
                 style={{ left: 0, width: `${pct(30)}%` }}
               >
-                Days 0–30 · active supply
+                Days 0–30 · medicine available
               </div>
               <div
                 className="absolute inset-y-0 flex items-center justify-center bg-risk-high/25 text-[10px] font-semibold text-risk-high-foreground"
                 style={{ left: `${pct(30)}%`, width: `${pct(12)}%` }}
               >
-                31–42 gap
+                Days 31–42 · no medicine
               </div>
             </div>
             <DayScale />
           </BandRow>
 
-          <BandRow icon={<ScanLine className="h-4 w-4" />} title="Chemist Fulfillment">
+          <BandRow icon={<ScanLine className="h-4 w-4" />} title="Refill Record">
             <div className="relative h-8 w-full overflow-hidden rounded-md border border-border bg-secondary/40">
               <div
                 className="absolute inset-y-0 border-x border-dashed border-risk-high/60 bg-risk-high-soft"
@@ -135,18 +135,18 @@ export function SignalAnalysis({
                 className="absolute inset-y-0 flex items-center text-[10px] font-semibold text-risk-high-foreground"
                 style={{ left: `${pct(31)}%` }}
               >
-                Missing QR “Rx Served” scan · Day 30 → Day 42
+                No refill record from Day 30 to Day 42
               </span>
             </div>
             <DayScale />
           </BandRow>
 
-          <BandRow icon={<HeartPulse className="h-4 w-4" />} title="Wearable Telemetry">
+          <BandRow icon={<HeartPulse className="h-4 w-4" />} title="Health Readings">
             <TelemetryCurve />
             <DayScale />
           </BandRow>
 
-          <BandRow icon={<CalendarClock className="h-4 w-4" />} title="Appointment Cadence">
+          <BandRow icon={<CalendarClock className="h-4 w-4" />} title="Doctor Visits">
             <div className="relative h-8 w-full rounded-md bg-secondary/40">
               <span
                 className="absolute top-1/2 h-3 w-3 -translate-y-1/2 rounded-full bg-risk-unknown"
@@ -162,8 +162,8 @@ export function SignalAnalysis({
               />
             </div>
             <p className="mt-2 text-xs text-muted-foreground">
-              Consultation postponed from Day 30 to Day 44 without dosage taper (pill
-              hoarding/intermittent omission proxy).
+              The visit moved from Day 30 to Day 44. There was no plan to slowly reduce the
+              medicine.
             </p>
           </BandRow>
         </section>
@@ -172,22 +172,22 @@ export function SignalAnalysis({
           <div className="flex min-w-0 items-center gap-2">
             <Activity className="h-4 w-4 shrink-0 text-risk-high-foreground" />
             <h3 className="text-sm font-bold text-risk-high-foreground">
-              Uncertainty &amp; AI Diagnostic Summary
+              What the Information Suggests
             </h3>
             <Badge variant="riskHigh" className="ml-auto shrink-0 bg-surface">
               86% ± 4%
             </Badge>
           </div>
           <p className="mt-2 text-sm leading-relaxed text-risk-high-foreground">
-            Adherence Confidence: 86% ± 4%. Physiological drift directly aligns with expected
-            pharmacokinetic washout curve following unverified refill. Treatment failure is
-            behavioral, not pharmacological.
+            We are 86% sure the patient missed medicine after the refill could not be confirmed.
+            Their health readings changed around the same time. The medicine itself is likely
+            still working.
           </p>
         </section>
 
         <footer className="flex flex-wrap gap-2">
-          <Button>Adjust Regimen</Button>
-          <Button variant="outline">Flag for Follow-up Consultation</Button>
+          <Button>Change Medicine Plan</Button>
+          <Button variant="outline">Book a Follow-up Visit</Button>
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
             Close Analysis
           </Button>
