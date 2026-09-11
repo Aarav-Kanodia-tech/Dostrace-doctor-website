@@ -28,11 +28,13 @@ export const Route = createFileRoute("/")({
           "Clinical decision dashboard that separates silent medication non-adherence from drug inefficacy using refill, wearable and appointment signals.",
       },
       { property: "og:title", content: "DoseTrace Clinician Intelligence" },
+      { property: "og:type", content: "website" },
       {
         property: "og:description",
         content:
           "Detect silent medication non-adherence and distinguish it from pharmacological inefficacy — no patient check-ins required.",
       },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Dashboard,
@@ -72,6 +74,9 @@ function Dashboard() {
 
   const runSync = useCallback(() => {
     setSynced(true);
+    setActive((patient) =>
+      patient?.id === "PX-8802" ? { ...patient, ...SYNCED_8802 } : patient,
+    );
     toast.success(
       "Sync Received from Patient App: Patient #PX-8802 refill OCR verified (Batch #MF-2026)",
     );
@@ -227,6 +232,7 @@ function Dashboard() {
                     "Chemist Refill Status",
                     "Appointment Cadence",
                     "Passive Biomarker Drift",
+                    "Medicines Missed",
                     "Inference Status",
                     "Action",
                   ].map((h) => (
@@ -257,6 +263,11 @@ function Dashboard() {
                     <td className="px-5 py-4 text-muted-foreground">{p.cadence}</td>
                     <td className="px-5 py-4 text-foreground">{p.telemetry}</td>
                     <td className="px-5 py-4">
+                      <Badge variant={p.missedMedicines > 0 ? "riskHigh" : "riskLow"}>
+                        {p.missedMedicines}
+                      </Badge>
+                    </td>
+                    <td className="px-5 py-4">
                       <Badge variant={badgeVariantFor[p.kind]} className="whitespace-nowrap">
                         {p.inference}
                       </Badge>
@@ -270,7 +281,7 @@ function Dashboard() {
                 ))}
                 {visible.length === 0 && (
                   <tr>
-                    <td colSpan={7} className="px-5 py-10 text-center text-muted-foreground">
+                    <td colSpan={8} className="px-5 py-10 text-center text-muted-foreground">
                       No patients match this filter.
                     </td>
                   </tr>
