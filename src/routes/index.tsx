@@ -28,11 +28,13 @@ export const Route = createFileRoute("/")({
           "Clinical decision dashboard that separates silent medication non-adherence from drug inefficacy using refill, wearable and appointment signals.",
       },
       { property: "og:title", content: "DoseTrace Clinician Intelligence" },
+      { property: "og:type", content: "website" },
       {
         property: "og:description",
         content:
           "Detect silent medication non-adherence and distinguish it from pharmacological inefficacy — no patient check-ins required.",
       },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Dashboard,
@@ -72,6 +74,9 @@ function Dashboard() {
 
   const runSync = useCallback(() => {
     setSynced(true);
+    setActive((patient) =>
+      patient?.id === "PX-8802" ? { ...patient, ...SYNCED_8802 } : patient,
+    );
     toast.success(
       "Sync Received from Patient App: Patient #PX-8802 refill OCR verified (Batch #MF-2026)",
     );

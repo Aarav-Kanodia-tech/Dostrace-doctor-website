@@ -57,7 +57,7 @@ export const BASE_PATIENTS: Patient[] = [
 ];
 
 export const SYNCED_8802: Partial<Patient> = {
-  chemist: "Verified via Blister OCR",
+  chemist: "Verified via Refill OCR",
   chemistTone: "ok",
   missedMedicines: 0,
   inference: "Low Risk / Adherent (Verified Supply)",
