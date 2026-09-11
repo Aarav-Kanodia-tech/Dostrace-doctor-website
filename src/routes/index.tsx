@@ -227,6 +227,7 @@ function Dashboard() {
                     "Chemist Refill Status",
                     "Appointment Cadence",
                     "Passive Biomarker Drift",
+                    "Medicines Missed",
                     "Inference Status",
                     "Action",
                   ].map((h) => (
@@ -257,6 +258,11 @@ function Dashboard() {
                     <td className="px-5 py-4 text-muted-foreground">{p.cadence}</td>
                     <td className="px-5 py-4 text-foreground">{p.telemetry}</td>
                     <td className="px-5 py-4">
+                      <Badge variant={p.missedMedicines > 0 ? "riskHigh" : "riskLow"}>
+                        {p.missedMedicines}
+                      </Badge>
+                    </td>
+                    <td className="px-5 py-4">
                       <Badge variant={badgeVariantFor[p.kind]} className="whitespace-nowrap">
                         {p.inference}
                       </Badge>
@@ -270,7 +276,7 @@ function Dashboard() {
                 ))}
                 {visible.length === 0 && (
                   <tr>
-                    <td colSpan={7} className="px-5 py-10 text-center text-muted-foreground">
+                    <td colSpan={8} className="px-5 py-10 text-center text-muted-foreground">
                       No patients match this filter.
                     </td>
                   </tr>

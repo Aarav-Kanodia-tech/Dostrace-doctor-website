@@ -9,6 +9,7 @@ export type Patient = {
   chemistTone: "warn" | "ok" | "muted";
   cadence: string;
   telemetry: string;
+  missedMedicines: number;
   inference: string;
   kind: InferenceKind;
 };
@@ -23,6 +24,7 @@ export const BASE_PATIENTS: Patient[] = [
     chemistTone: "warn",
     cadence: "Follow-up postponed by 14 days",
     telemetry: "RHR Spike (+14 bpm) & Sleep Disruption",
+    missedMedicines: 24,
     inference: "High Risk: Suspected Omission (86% Confidence)",
     kind: "high",
   },
@@ -35,6 +37,7 @@ export const BASE_PATIENTS: Patient[] = [
     chemistTone: "ok",
     cadence: "Punctual check-in",
     telemetry: "Systolic BP Drift (148/92 mmHg)",
+    missedMedicines: 0,
     inference: "Potential Molecule Resistance (89% Confidence)",
     kind: "inefficacy",
   },
@@ -47,6 +50,7 @@ export const BASE_PATIENTS: Patient[] = [
     chemistTone: "muted",
     cadence: "Punctual check-in",
     telemetry: "Vitals Stable at Baseline",
+    missedMedicines: 0,
     inference: "Data Incomplete — Presumed Compliant (48% Uncertainty)",
     kind: "unknown",
   },
@@ -55,6 +59,7 @@ export const BASE_PATIENTS: Patient[] = [
 export const SYNCED_8802: Partial<Patient> = {
   chemist: "Verified via Blister OCR",
   chemistTone: "ok",
+  missedMedicines: 0,
   inference: "Low Risk / Adherent (Verified Supply)",
   kind: "low",
 };

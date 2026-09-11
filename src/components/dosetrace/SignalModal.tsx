@@ -94,6 +94,12 @@ export function SignalModal({
           <p className="mt-1 text-sm text-muted-foreground">
             Age {patient.age} · {patient.condition} · WONDRx paper prescription timestamp: Day 0
           </p>
+          <Badge
+            variant={patient.missedMedicines > 0 ? "riskHigh" : "riskLow"}
+            className="mt-3"
+          >
+            Medicines missed: {patient.missedMedicines}
+          </Badge>
         </header>
 
         <section className="mt-2 rounded-lg border border-border bg-surface p-5">
