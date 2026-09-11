@@ -73,7 +73,7 @@ function TelemetryCurve() {
   );
 }
 
-export function SignalModal({
+export function SignalAnalysis({
   patient,
   open,
   onOpenChange,
@@ -189,7 +189,7 @@ export function SignalModal({
           <Button>Adjust Regimen</Button>
           <Button variant="outline">Flag for Follow-up Consultation</Button>
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            Close Modal
+            Close Analysis
           </Button>
         </footer>
       </DialogContent>
