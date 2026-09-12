@@ -49,7 +49,7 @@ function TelemetryCurve() {
     points.push(`${(d / DAYS) * 100},${y}`);
   }
   return (
-    <div className="relative h-24 w-full overflow-hidden rounded-md border border-border bg-secondary/40">
+    <div className="relative h-24 w-full overflow-hidden rounded-xl border border-border bg-secondary/40">
       <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="h-full w-full">
         <polyline
           points={points.join(" ")}
@@ -64,7 +64,7 @@ function TelemetryCurve() {
         style={{ left: `${pct(33)}%` }}
       />
       <span
-        className="absolute top-1 -translate-x-1/2 rounded bg-risk-high-soft px-1.5 py-0.5 text-[10px] font-semibold text-risk-high-foreground"
+        className="absolute top-1 -translate-x-1/2 rounded-lg bg-risk-high-soft px-1.5 py-0.5 text-[10px] font-semibold text-risk-high-foreground"
         style={{ left: `${pct(41)}%` }}
       >
         Day 33 · resting heart rate starts rising
@@ -86,29 +86,36 @@ export function SignalAnalysis({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-4xl">
+      <DialogContent className="max-h-[90vh] overflow-y-auto rounded-2xl sm:max-w-4xl">
         <header className="min-w-0 pr-8">
-          <h2 className="text-lg font-bold tracking-tight text-foreground">
-            Patient #{patient.id} — Medicine Review
-          </h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Age {patient.age} · {patient.condition} · Prescription started on Day 0
-          </p>
+          <div className="flex items-start gap-4">
+            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-primary text-primary-foreground shadow-sm">
+              <HeartPulse className="h-6 w-6" />
+            </span>
+            <div className="min-w-0">
+              <h2 className="text-lg font-bold tracking-tight text-foreground">
+                Patient #{patient.id} — Medicine Review
+              </h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Age {patient.age} · {patient.condition} · Prescription started on Day 0
+              </p>
+            </div>
+          </div>
           <Badge
             variant={patient.missedMedicines > 0 ? "riskHigh" : "riskLow"}
-            className="mt-3"
+            className="mt-4"
           >
             Medicines missed: {patient.missedMedicines}
           </Badge>
         </header>
 
-        <section className="mt-2 rounded-lg border border-border bg-surface p-5">
+        <section className="mt-2 rounded-2xl border border-border bg-surface p-5 shadow-card">
           <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             60-Day Health History
           </h3>
 
           <BandRow icon={<PackageSearch className="h-4 w-4" />} title="Medicine Supply">
-            <div className="relative h-8 w-full overflow-hidden rounded-md bg-secondary">
+            <div className="relative h-8 w-full overflow-hidden rounded-xl bg-secondary">
               <div
                 className="absolute inset-y-0 flex items-center justify-center bg-risk-low/25 text-[10px] font-semibold text-risk-low-foreground"
                 style={{ left: 0, width: `${pct(30)}%` }}
@@ -126,7 +133,7 @@ export function SignalAnalysis({
           </BandRow>
 
           <BandRow icon={<ScanLine className="h-4 w-4" />} title="Refill Record">
-            <div className="relative h-8 w-full overflow-hidden rounded-md border border-border bg-secondary/40">
+            <div className="relative h-8 w-full overflow-hidden rounded-xl border border-border bg-secondary/40">
               <div
                 className="absolute inset-y-0 border-x border-dashed border-risk-high/60 bg-risk-high-soft"
                 style={{ left: `${pct(30)}%`, width: `${pct(12)}%` }}
@@ -147,7 +154,7 @@ export function SignalAnalysis({
           </BandRow>
 
           <BandRow icon={<CalendarClock className="h-4 w-4" />} title="Doctor Visits">
-            <div className="relative h-8 w-full rounded-md bg-secondary/40">
+            <div className="relative h-8 w-full rounded-xl bg-secondary/40">
               <span
                 className="absolute top-1/2 h-3 w-3 -translate-y-1/2 rounded-full bg-risk-unknown"
                 style={{ left: `${pct(30)}%` }}
@@ -168,11 +175,10 @@ export function SignalAnalysis({
           </BandRow>
         </section>
 
-
         <footer className="flex flex-wrap gap-2">
-          <Button>Change Medicine Plan</Button>
-          <Button variant="outline">Book a Follow-up Visit</Button>
-          <Button variant="ghost" onClick={() => onOpenChange(false)}>
+          <Button className="rounded-full">Change Medicine Plan</Button>
+          <Button variant="outline" className="rounded-full">Book a Follow-up Visit</Button>
+          <Button variant="ghost" onClick={() => onOpenChange(false)} className="rounded-full">
             Close Analysis
           </Button>
         </footer>
