@@ -1,4 +1,4 @@
-import { CalendarClock, HeartPulse, PackageSearch, ScanLine } from "lucide-react";
+import { CalendarClock, ClipboardList, HeartPulse, PackageSearch, Ruler, ScanLine, Weight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
