@@ -44,15 +44,14 @@ const SYNC_KEY = "dosetrace_patient_sync";
 
 const TABS = [
   { label: "All Patients", kind: "all" as const },
-  { label: "May Miss Medicine", kind: "high" as const },
-  { label: "Medicine May Not Work", kind: "inefficacy" as const },
-  { label: "Not Enough Information", kind: "unknown" as const },
+  { label: "Recent Visits", kind: "recent" as const },
+  { label: "Upcoming Visits", kind: "upcoming" as const },
 ];
 
 function Dashboard() {
   const [synced, setSynced] = useState(false);
   const [query, setQuery] = useState("");
-  const [tab, setTab] = useState<"all" | "high" | "inefficacy" | "unknown">("all");
+  const [tab, setTab] = useState<"all" | "recent" | "upcoming">("all");
   const [active, setActive] = useState<Patient | null>(null);
 
   const patients = useMemo(
@@ -67,9 +66,18 @@ function Dashboard() {
     unknown: 9,
   };
 
+  const visitCounts = {
+    all: counts.all,
+    recent: patients.filter((patient) => patient.appointment.toLowerCase().includes("happened")).length,
+    upcoming: patients.filter((patient) => !patient.appointment.toLowerCase().includes("happened")).length,
+  };
+
   const visible = patients.filter(
     (p) =>
-      p.id.toLowerCase().includes(query.trim().toLowerCase()) && (tab === "all" || p.kind === tab),
+      p.id.toLowerCase().includes(query.trim().toLowerCase()) &&
+      (tab === "all" ||
+        (tab === "recent" && p.appointment.toLowerCase().includes("happened")) ||
+        (tab === "upcoming" && !p.appointment.toLowerCase().includes("happened"))),
   );
 
   const runSync = useCallback(() => {
@@ -168,17 +176,15 @@ function Dashboard() {
           </div>
           <div className="flex flex-wrap gap-2">
             {TABS.map((t) => (
-              <button
+              <Button
                 key={t.kind}
+                type="button"
+                variant={tab === t.kind ? "default" : "outline"}
                 onClick={() => setTab(t.kind)}
-                className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
-                  tab === t.kind
-                    ? "border-transparent bg-primary text-primary-foreground shadow-sm"
-                    : "border-border bg-surface text-muted-foreground hover:bg-secondary"
-                }`}
+                className="rounded-full"
               >
-                {t.label} ({counts[t.kind]})
-              </button>
+                {t.label} ({visitCounts[t.kind]})
+              </Button>
             ))}
           </div>
         </section>
