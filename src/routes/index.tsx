@@ -56,22 +56,24 @@ function Dashboard() {
     [synced],
   );
 
-  const counts = {
-    all: 29,
+  const isRecent = (p: Patient) => {
+    if (!p.lastVisit) return false;
+    const days = (Date.now() - new Date(p.lastVisit).getTime()) / 86400000;
+    return days >= 0 && days <= 30;
   };
 
   const visitCounts = {
-    all: counts.all,
-    recent: patients.filter((patient) => patient.appointment.toLowerCase().includes("happened")).length,
-    upcoming: patients.filter((patient) => !patient.appointment.toLowerCase().includes("happened")).length,
+    all: patients.length,
+    recent: patients.filter(isRecent).length,
+    upcoming: patients.filter((p) => p.nextVisit !== null).length,
   };
 
   const visible = patients.filter(
     (p) =>
       p.id.toLowerCase().includes(query.trim().toLowerCase()) &&
       (tab === "all" ||
-        (tab === "recent" && p.appointment.toLowerCase().includes("happened")) ||
-        (tab === "upcoming" && !p.appointment.toLowerCase().includes("happened"))),
+        (tab === "recent" && isRecent(p)) ||
+        (tab === "upcoming" && p.nextVisit !== null)),
   );
 
   const runSync = useCallback(() => {
