@@ -1,4 +1,4 @@
-import { CalendarClock, HeartPulse, PackageSearch, ScanLine } from "lucide-react";
+import { CalendarClock, ClipboardList, HeartPulse, PackageSearch, Ruler, ScanLine, Weight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -108,6 +108,45 @@ export function SignalAnalysis({
             Medicines missed: {patient.missedMedicines}
           </Badge>
         </header>
+
+        <section className="mt-2 rounded-2xl border border-border bg-surface p-5 shadow-card">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Medical History
+          </h3>
+          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+            <div className="flex items-center gap-3 rounded-xl bg-secondary/60 p-3">
+              <Ruler className="h-5 w-5 shrink-0 text-primary" />
+              <div>
+                <p className="text-xs text-muted-foreground">Height</p>
+                <p className="text-sm font-semibold text-foreground">{patient.heightCm} cm</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 rounded-xl bg-secondary/60 p-3">
+              <Weight className="h-5 w-5 shrink-0 text-primary" />
+              <div>
+                <p className="text-xs text-muted-foreground">Weight</p>
+                <p className="text-sm font-semibold text-foreground">{patient.weightKg} kg</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 rounded-xl bg-secondary/60 p-3">
+              <CalendarClock className="h-5 w-5 shrink-0 text-primary" />
+              <div>
+                <p className="text-xs text-muted-foreground">Visits</p>
+                <p className="text-sm font-semibold text-foreground">
+                  {patient.lastVisit ?? "—"} → {patient.nextVisit ?? "Not booked"}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="mt-4 flex items-start gap-2">
+            <ClipboardList className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
+            <ul className="list-disc space-y-1 pl-4 text-sm text-foreground">
+              {patient.history.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </section>
 
         <section className="mt-2 rounded-2xl border border-border bg-surface p-5 shadow-card">
           <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
