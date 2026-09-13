@@ -1,13 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
-  AlertTriangle,
-  FlaskConical,
   HeartPulse,
   RefreshCw,
   RotateCcw,
   Search,
-  Signal,
   UserRound,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -61,9 +58,6 @@ function Dashboard() {
 
   const counts = {
     all: 29,
-    high: synced ? 13 : 14,
-    inefficacy: 6,
-    unknown: 9,
   };
 
   const visitCounts = {
@@ -98,38 +92,6 @@ function Dashboard() {
     return () => window.removeEventListener("storage", onStorage);
   }, [runSync]);
 
-  const kpis = [
-    {
-      icon: AlertTriangle,
-      count: counts.high,
-      title: "May Not Be Taking Medicine",
-      sub: "Late refill, changed health readings, and delayed visit",
-      variant: "riskHigh" as const,
-      tone: "risk-high" as const,
-    },
-    {
-      icon: FlaskConical,
-      count: counts.inefficacy,
-      title: "Medicine May Not Be Working",
-      sub: "Health readings worsened even though refills were on time",
-      variant: "riskInefficacy" as const,
-      tone: "risk-inefficacy" as const,
-    },
-    {
-      icon: Signal,
-      count: counts.unknown,
-      title: "Not Enough Information",
-      sub: "Health readings are steady, but a refill record is missing",
-      variant: "riskUnknown" as const,
-      tone: "risk-unknown" as const,
-    },
-  ];
-
-  const toneIconBg: Record<string, string> = {
-    "risk-high": "bg-risk-high-soft text-risk-high-foreground",
-    "risk-inefficacy": "bg-risk-inefficacy-soft text-risk-inefficacy-foreground",
-    "risk-unknown": "bg-risk-unknown-soft text-risk-unknown-foreground",
-  };
 
   return (
     <div className="min-h-screen bg-background font-sans">
@@ -187,29 +149,6 @@ function Dashboard() {
               </Button>
             ))}
           </div>
-        </section>
-
-        <section className="grid gap-4 md:grid-cols-3">
-          {kpis.map((k) => (
-            <article
-              key={k.title}
-              className="rounded-2xl border border-border bg-surface p-5 shadow-card transition-shadow hover:shadow-lg"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full ${toneIconBg[k.tone]}`}>
-                  <k.icon className="h-5 w-5" />
-                </span>
-                <Badge variant={k.variant}>
-                  Alert
-                </Badge>
-              </div>
-              <p className="mt-4 text-3xl font-bold tracking-tight text-foreground">{k.count}</p>
-              <h2 className="mt-1 text-sm font-semibold text-foreground">
-                Patients • {k.title}
-              </h2>
-              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{k.sub}</p>
-            </article>
-          ))}
         </section>
 
         <section className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-border bg-surface p-4 shadow-card">
