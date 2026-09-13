@@ -189,6 +189,7 @@ function Dashboard() {
                     "Patient ID",
                     "Medicine Plan",
                     "Refill Status",
+                    "Last Visit",
                     "Next Visit",
                     "Health Changes",
                     "Medicines Missed",
@@ -218,7 +219,13 @@ function Dashboard() {
                         {p.chemist}
                       </span>
                     </td>
-                    <td className="px-5 py-4 text-muted-foreground">{p.appointment}</td>
+                    <td className="px-5 py-4 text-muted-foreground">
+                      {p.lastVisit ?? "—"}
+                    </td>
+                    <td className="px-5 py-4 text-muted-foreground">
+                      <div>{p.nextVisit ?? "Not booked"}</div>
+                      <div className="text-xs">{p.appointment}</div>
+                    </td>
                     <td className="px-5 py-4 text-foreground">{p.telemetry}</td>
                     <td className="px-5 py-4">
                       <Badge variant={p.missedMedicines > 0 ? "riskHigh" : "riskLow"}>
@@ -234,7 +241,7 @@ function Dashboard() {
                 ))}
                 {visible.length === 0 && (
                   <tr>
-                    <td colSpan={7} className="px-5 py-10 text-center text-muted-foreground">
+                    <td colSpan={8} className="px-5 py-10 text-center text-muted-foreground">
                       No patients match this filter.
                     </td>
                   </tr>
